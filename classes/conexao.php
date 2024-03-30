@@ -2,7 +2,7 @@
 
 class Conexao
 {
-    private $host = 'localhost';
+    private $host = '127.0.0.1:3307';
     private $dbname = 'php_com_pdo';
     private $user = 'root';
     private $pass = '';
@@ -10,11 +10,7 @@ class Conexao
     public function conectar()
     {
         try {
-            $conexao = new PDO(
-                "mysql:host=$this->host;dbname=$this->dbname",
-                "$this->user",
-                "$this->pass"
-            );
+            $conexao = new PDO("mysql:host=$this->host;dbname=$this->dbname","$this->user","$this->pass");
 
             return $conexao;
             
