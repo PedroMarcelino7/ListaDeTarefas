@@ -18,6 +18,48 @@ require 'tarefa_controller.php';
 		integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
 		integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+	<script>
+		function editar(id, txt_tarefa) {
+			let form = document.createElement('form')
+			form.action = 'index.php?pag=index&acao=atualizar'
+			form.method = 'post'
+			form.className = 'd-flex'
+
+			let inputTarefa = document.createElement('input')
+			inputTarefa.type = 'text'
+			inputTarefa.name = 'tarefa'
+			inputTarefa.className = 'form-control'
+			inputTarefa.value = txt_tarefa
+
+			let inputId = document.createElement('input')
+			inputId.type = 'hidden'
+			inputId.name = 'id'
+			inputId.value = id
+
+			let button = document.createElement('button')
+			button.type = 'submit'
+			button.className = 'btn btn-info'
+			button.innerHTML = 'Atualizar'
+
+			form.appendChild(inputTarefa)
+			form.appendChild(inputId)
+			form.appendChild(button)
+
+			let tarefa = document.querySelector('#tarefa_' + id)
+			tarefa.innerHTML = ''
+
+			tarefa.insertBefore(form, tarefa[0])
+		}
+
+		function remover(id) {
+			location.href = `index.php?pag=index&acao=remover&id=${id}`
+		}
+
+		function marcarRealizada(id) {
+			location.href = `index.php?pag=index&acao=marcarRealizada&id=${id}`
+		}
+	</script>
 </head>
 
 <body>
@@ -58,13 +100,10 @@ require 'tarefa_controller.php';
 									<div class="col-sm-3 mt-2 d-flex justify-content-between">
 										<i class="fas fa-trash-alt fa-lg text-danger"
 											onclick="remover(<?= $tarefa->id ?>)"></i>
-
-										<?php if ($tarefa->status == 'pendente') { ?>
-											<i class="fas fa-edit fa-lg text-info"
-												onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>')"></i>
-											<i class="fas fa-check-square fa-lg text-success"
-												onclick="marcarRealizada(<?= $tarefa->id ?>)"></i>
-										<?php } ?>
+										<i class="fas fa-edit fa-lg text-info"
+											onclick="editar(<?= $tarefa->id ?>, '<?= $tarefa->tarefa ?>')"></i>
+										<i class="fas fa-check-square fa-lg text-success"
+											onclick="marcarRealizada(<?= $tarefa->id ?>)"></i>
 									</div>
 								</div>
 
